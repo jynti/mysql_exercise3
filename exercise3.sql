@@ -2,7 +2,7 @@
 CREATE TABLE User
 (
   Name VARCHAR(20) PRIMARY KEY NOT NULL
-  Type VARCHAR(10)
+  Type ENUM('admin', 'normal')
 )
 ENGINE=INNODB;
 
