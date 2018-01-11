@@ -1,5 +1,5 @@
 1)
-CREATE TABLE User
+CREATE TABLE user
 (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(20) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE User
 )
 ENGINE=INNODB;
 
-mysql> INSERT INTO User(name, type)
+mysql> INSERT INTO user(name, type)
     -> VALUES ('user1', 'admin'),
     -> ('user2', 'normal'),
     -> ('user3', 'normal'),
@@ -15,7 +15,7 @@ mysql> INSERT INTO User(name, type)
 Query OK, 4 rows affected (0.11 sec)
 Records: 4  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM User;
+mysql> SELECT * FROM user;
 +----+-------+--------+
 | id | name  | type   |
 +----+-------+--------+
@@ -27,13 +27,13 @@ mysql> SELECT * FROM User;
 4 rows in set (0.00 sec)
 
 //UPDATE
-mysql> UPDATE User
+mysql> UPDATE user
     -> set type='admin'
     -> WHERE id=4;
 Query OK, 1 row affected (0.47 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> SELECT * FROM User;
+mysql> SELECT * FROM user;
 +----+-------+--------+
 | id | name  | type   |
 +----+-------+--------+
@@ -46,11 +46,11 @@ mysql> SELECT * FROM User;
 
 //DELETE
 mysql> DELETE
-    -> FROM User
+    -> FROM user
     -> WHERE id=4;
 Query OK, 1 row affected (0.36 sec)
 
-mysql> SELECT * FROM User;
+mysql> SELECT * FROM user;
 +----+-------+--------+
 | id | name  | type   |
 +----+-------+--------+
@@ -62,14 +62,14 @@ mysql> SELECT * FROM User;
 
 
 /////////////////////////////////////////////////////////////////////////////
-CREATE TABLE Category
+CREATE TABLE category
 (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   type ENUM('a', 'b', 'c', 'd') NOT NULL
 )
 ENGINE=INNODB;
 
-mysql> INSERT INTO Category
+mysql> INSERT INTO category
     -> VALUES (NULL, 'a'),
     -> (NULL, 'b'),
     -> (NULL, 'c'),
@@ -77,7 +77,7 @@ mysql> INSERT INTO Category
 Query OK, 4 rows affected (0.40 sec)
 Records: 4  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM Category;
+mysql> SELECT * FROM category;
 +----+------+
 | id | type |
 +----+------+
@@ -90,13 +90,13 @@ mysql> SELECT * FROM Category;
 
 
 //UPDATE
-mysql> UPDATE Category
+mysql> UPDATE category
     -> SET type='c'
     -> WHERE id=4;
 Query OK, 1 row affected (0.07 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> SELECT * FROM Category;
+mysql> SELECT * FROM category;
 +----+------+
 | id | type |
 +----+------+
@@ -109,11 +109,11 @@ mysql> SELECT * FROM Category;
 
 //DELETE
 mysql> DELETE
-    -> FROM Category
+    -> FROM category
     -> WHERE id=4;
 Query OK, 1 row affected (0.11 sec)
 
-mysql> SELECT * FROM Category;
+mysql> SELECT * FROM category;
 +----+------+
 | id | type |
 +----+------+
@@ -124,20 +124,20 @@ mysql> SELECT * FROM Category;
 3 rows in set (0.00 sec)
 
 /////////////////////////////////////////////////////////////////////////////
-CREATE TABLE Article
+CREATE TABLE article
 (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   author_id INT NOT NULL,
   title VARCHAR(50) NOT NULL,
   category_id INT NOT NULL,
   content TEXT,
-  FOREIGN KEY (author_id) REFERENCES User (id),
-  FOREIGN KEY (category_id) REFERENCES Category(id)
+  FOREIGN KEY (author_id) REFERENCES user (id),
+  FOREIGN KEY (category_id) REFERENCES category(id)
 )
 ENGINE=INNODB;
 
 //INSERT
-mysql> INSERT INTO Article(author_id, title, category_id, content)
+mysql> INSERT INTO article(author_id, title, category_id, content)
     -> VALUES (2, 'title1', 3, 'content1'),
     -> (3, 'title2', 1, 'content2'),
     -> (3, 'title3', 3, 'content3'),
@@ -146,7 +146,7 @@ mysql> INSERT INTO Article(author_id, title, category_id, content)
 Query OK, 5 rows affected (0.38 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM Article;
+mysql> SELECT * FROM article;
 +----+-----------+--------+-------------+----------+
 | id | author_id | title  | category_id | content  |
 +----+-----------+--------+-------------+----------+
@@ -159,13 +159,13 @@ mysql> SELECT * FROM Article;
 5 rows in set (0.00 sec)
 
 //UPDATE
-mysql> UPDATE Article
+mysql> UPDATE article
     -> set title='titleNew'
     -> WHERE title='title5';
 Query OK, 1 row affected (0.12 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> SELECT * FROM Article;
+mysql> SELECT * FROM article;
 +----+-----------+----------+-------------+----------+
 | id | author_id | title    | category_id | content  |
 +----+-----------+----------+-------------+----------+
@@ -180,11 +180,11 @@ mysql> SELECT * FROM Article;
 
 //DELETE
 mysql> delete
-    -> FROM Article
+    -> FROM article
     -> WHERE id=5;
 Query OK, 1 row affected (0.09 sec)
 
-mysql> SELECT * FROM Article;
+mysql> SELECT * FROM article;
 +----+-----------+--------+-------------+----------+
 | id | author_id | title  | category_id | content  |
 +----+-----------+--------+-------------+----------+
@@ -198,18 +198,18 @@ mysql> SELECT * FROM Article;
 
 
 /////////////////////////////////////////////////////////////////////////////
-CREATE TABLE Comment
+CREATE TABLE comment
 (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   article_id INT NOT NULL,
   commenter_id INT NOT NULL,
   content TINYTEXT,
-  FOREIGN KEY (article_id) REFERENCES Article(id),
-  FOREIGN KEY (commenter_id) REFERENCES User(id)
+  FOREIGN KEY (article_id) REFERENCES article(id),
+  FOREIGN KEY (commenter_id) REFERENCES user(id)
 )
 ENGINE=INNODB;
 
-mysql> INSERT INTO Comment(article_id, commenter_id, content)
+mysql> INSERT INTO comment(article_id, commenter_id, content)
     -> VALUES (2, 1, 'comment1'),
     -> (3, 1, 'comment2'),
     -> (3, 1, 'comment3'),
@@ -221,7 +221,7 @@ mysql> INSERT INTO Comment(article_id, commenter_id, content)
 Query OK, 8 rows affected (0.37 sec)
 Records: 8  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM Comment;
+mysql> SELECT * FROM comment;
 +----+------------+--------------+----------+
 | id | article_id | commenter_id | content  |
 +----+------------+--------------+----------+
@@ -237,13 +237,13 @@ mysql> SELECT * FROM Comment;
 8 rows in set (0.00 sec)
 
 //UPDATE
-mysql> UPDATE Comment
+mysql> UPDATE comment
     -> SET content='commentNew'
     -> WHERE id=8;
 Query OK, 1 row affected (0.12 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> SELECT * FROM Comment;
+mysql> SELECT * FROM comment;
 +----+------------+--------------+------------+
 | id | article_id | commenter_id | content    |
 +----+------------+--------------+------------+
@@ -260,11 +260,11 @@ mysql> SELECT * FROM Comment;
 
 //DELETE
 mysql> DELETE
-    -> FROM Comment
+    -> FROM comment
     -> WHERE id=8;
 Query OK, 1 row affected (0.11 sec)
 
-mysql> SELECT * FROM Comment;
+mysql> SELECT * FROM comment;
 +----+------------+--------------+----------+
 | id | article_id | commenter_id | content  |
 +----+------------+--------------+----------+
@@ -284,10 +284,10 @@ mysql> SELECT * FROM Comment;
 
 without_variables:-
 
-mysql> SELECT Article.id, Article.title, Article.category_id, Article.content
-    -> FROM Article JOIN User
-    -> on Article.author_id=User.id
-    -> WHERE User.name='user3';
+mysql> SELECT article.id, article.title, article.category_id, article.content
+    -> FROM article JOIN user
+    -> on article.author_id=user.id
+    -> WHERE user.name='user3';
 +----+--------+-------------+----------+
 | id | title  | category_id | content  |
 +----+--------+-------------+----------+
@@ -300,7 +300,7 @@ mysql> SELECT Article.id, Article.title, Article.category_id, Article.content
 with variable:-
 
 mysql> SELECT @user_id:=id
-    -> FROM User
+    -> FROM user
     -> WHERE name='user3';
 +--------------+
 | @user_id:=id |
@@ -310,7 +310,7 @@ mysql> SELECT @user_id:=id
 1 row in set (0.00 sec)
 
 mysql> SELECT id, title, category_id, content
-    -> FROM Article
+    -> FROM article
     -> WHERE author_id=@user_id;
 +----+--------+-------------+----------+
 | id | title  | category_id | content  |
@@ -325,12 +325,12 @@ mysql> SELECT id, title, category_id, content
 3)
 
 without subquery:-
-mysql> SELECT Article.id AS article_id , Article.content AS article_content, Comment.id AS comment_id,  Comment.content AS comment_content
-    -> FROM Article JOIN User
-    -> ON Article.author_id=User.id
-    -> JOIN Comment
-    -> ON Comment.article_id=Article.id
-    -> WHERE User.name='user3';
+mysql> SELECT article.id AS article_id , article.content AS article_content, comment.id AS comment_id,  comment.content AS comment_content
+    -> FROM article JOIN user
+    -> ON article.author_id=user.id
+    -> JOIN comment
+    -> ON comment.article_id=article.id
+    -> WHERE user.name='user3';
 +------------+-----------------+------------+-----------------+
 | article_id | article_content | comment_id | comment_content |
 +------------+-----------------+------------+-----------------+
@@ -344,13 +344,13 @@ mysql> SELECT Article.id AS article_id , Article.content AS article_content, Com
 6 rows in set (0.00 sec)
 
 using subquery:-
-mysql> SELECT Article.id AS article_id , Article.content AS article_content, Comment.id AS comment_id,  Comment.content AS comment_content
-    -> FROM Article JOIN Comment
-    -> ON Comment.article_id=Article.id
+mysql> SELECT article.id AS article_id , article.content AS article_content, comment.id AS comment_id,  comment.content AS comment_content
+    -> FROM article JOIN comment
+    -> ON comment.article_id=article.id
     -> WHERE author_id =
     -> (
     -> SELECT id
-    -> FROM User
+    -> FROM user
     -> WHERE name='user3'
     -> );
 +------------+-----------------+------------+-----------------+
@@ -370,9 +370,9 @@ mysql> SELECT Article.id AS article_id , Article.content AS article_content, Com
 4)
 
 without subquery:-
-mysql> SELECT Article.id, Article.title, Article.content
-    -> FROM Article LEFT JOIN Comment
-    -> on Article.id=Comment.article_id
+mysql> SELECT article.id, article.title, article.content
+    -> FROM article LEFT JOIN comment
+    -> on article.id=comment.article_id
     -> WHERE commenter_id IS NULL;
 +----+--------+----------+
 | id | title  | content  |
@@ -382,13 +382,13 @@ mysql> SELECT Article.id, Article.title, Article.content
 1 row in set (0.01 sec)
 
 using subquery:-
-mysql> SELECT Article.id, Article.title, Article.content
-    -> FROM Article
+mysql> SELECT article.id, article.title, article.content
+    -> FROM article
     -> WHERE NOT EXISTS
     -> (
     ->   SELECT *
-    ->   FROM Comment
-    ->   WHERE Article.id = Comment.article_id
+    ->   FROM comment
+    ->   WHERE article.id = comment.article_id
     -> );
 +----+--------+----------+
 | id | title  | content  |
@@ -401,12 +401,12 @@ mysql> SELECT Article.id, Article.title, Article.content
 5)
 
 mysql> SELECT *
-    -> FROM Article
+    -> FROM article
     -> WHERE id = (
     -> SELECT article_id
-    -> FROM Comment
+    -> FROM comment
     -> GROUP BY article_id
-    -> ORDER BY count(*) DESC
+    -> ORDER BY COUNT(*) DESC
     -> LIMIT 1
     -> );
 +----+-----------+--------+-------------+----------+
@@ -421,20 +421,15 @@ mysql> SELECT *
 /////////////////////////////////////////////////
 6)
 
-mysql> SELECT temp.id, Article.title, Article.content
-    -> FROM (
-    -> SELECT Article.id, COUNT(*)  AS count
-    -> FROM Article LEFT JOIN Comment
-    -> ON Article.id=Comment.article_id
-    -> GROUP BY Article.id
-    -> )AS temp JOIN Article
-    -> USING (id)
-    -> GROUP BY temp.id
-    -> HAVING MAX(count) <= 1;
+mysql> SELECT article.id, article.title, article.content
+    -> FROM article LEFT JOIN comment
+    -> ON article.id=comment.article_id
+    -> GROUP BY article_id
+    -> HAVING COUNT(commenter_id)=COUNT(DISTINCT commenter_id);
 +----+--------+----------+
 | id | title  | content  |
 +----+--------+----------+
-|  1 | title1 | content1 |
 |  4 | title4 | content4 |
+|  1 | title1 | content1 |
 +----+--------+----------+
 2 rows in set (0.00 sec)
