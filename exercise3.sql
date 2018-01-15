@@ -421,11 +421,11 @@ mysql> SELECT *
 /////////////////////////////////////////////////
 6)
 
-mysql> SELECT article.id, article.title, article.content
-    -> FROM article LEFT JOIN comment
-    -> ON article.id=comment.article_id
+mysql> SELECT Article.id, Article.title, Article.content
+    -> FROM Article LEFT JOIN Comment
+    -> ON Article.id=Comment.article_id
     -> GROUP BY article_id
-    -> HAVING COUNT(commenter_id)=COUNT(DISTINCT commenter_id);
+    -> HAVING COUNT(commenter_id)<=1;
 +----+--------+----------+
 | id | title  | content  |
 +----+--------+----------+
